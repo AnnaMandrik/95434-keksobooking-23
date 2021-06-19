@@ -42,5 +42,8 @@ const rentalAnnouncement =  ()=> ({
   offer: createOfferObject(),
   location: createLocationObject(),
 });
+const SIMILAR_ANNOUNCMENT_COUNT = 10;
 
-export {rentalAnnouncement};
+const rentalAnnouncements = new Array(SIMILAR_ANNOUNCMENT_COUNT).fill(null).map(() => rentalAnnouncement());
+
+export {rentalAnnouncements};

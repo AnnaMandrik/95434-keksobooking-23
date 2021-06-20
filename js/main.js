@@ -1,2 +1,2 @@
-import './data.js';
-import './popup.js';
+import fragmentMakeFunction from './popup.js';
+fragmentMakeFunction();

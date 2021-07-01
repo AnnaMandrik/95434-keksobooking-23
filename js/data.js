@@ -1,7 +1,7 @@
 import {getRandomIntInclusive, getRandomIntDrob, findElems} from './util.js';
 
-const shirota = getRandomIntDrob(35.65000, 35.70000, 5);
-const dolgota = getRandomIntDrob(139.70000, 139.80000, 5);
+const shirota = getRandomIntDrob(35.31513, 36.26421, 5);
+const dolgota = getRandomIntDrob(139.31213, 140.01251, 5);
 const typeFlatArr = ['palace', 'flat', 'house', 'bungalow', 'hotel'];
 const checkInOutArr = ['12:00', '13:00', '14:00'];
 const featuresArr = ['wifi', 'dishwasher', 'parking', 'washer', 'elevator', 'conditioner'];
@@ -42,8 +42,10 @@ const rentalAnnouncement =  ()=> ({
   offer: createOfferObject(),
   location: createLocationObject(),
 });
-const SIMILAR_ANNOUNCMENT_COUNT = 10;
 
-const rentalAnnouncements = new Array(SIMILAR_ANNOUNCMENT_COUNT).fill(null).map(() => rentalAnnouncement());
 
+const rentalAnnouncements = () => {
+  const newArr = new Array().fill(null).map(() => rentalAnnouncement());
+  return newArr;
+};
 export {rentalAnnouncements};

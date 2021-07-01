@@ -1,5 +1,16 @@
-//import fragmentMakeFunction from './popup.js';
-//fragmentMakeFunction();
+import './form.js';
+import {rentalAnnouncements} from './data.js';
+import {createMap, createMinPinIcon, createManyMarkers} from'./map.js';
+import {disableForm, enableForm} from './main-page.js';
 
-import  './form.js';
+const COUNT_ELEMENTS = 5;
+const objects = rentalAnnouncements(COUNT_ELEMENTS);
+
+disableForm();
+createMap(() => {
+  enableForm();
+  createMinPinIcon();
+  createManyMarkers(objects);
+});
+
 

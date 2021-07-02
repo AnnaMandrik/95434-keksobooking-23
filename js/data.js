@@ -1,7 +1,6 @@
 import {getRandomIntInclusive, getRandomIntDrob, findElems} from './util.js';
 
-const shirota = getRandomIntDrob(35.31513, 36.26421, 5);
-const dolgota = getRandomIntDrob(139.31213, 140.01251, 5);
+
 const typeFlatArr = ['palace', 'flat', 'house', 'bungalow', 'hotel'];
 const checkInOutArr = ['12:00', '13:00', '14:00'];
 const featuresArr = ['wifi', 'dishwasher', 'parking', 'washer', 'elevator', 'conditioner'];
@@ -21,7 +20,7 @@ const createAuthorObject = () => {
 
 const createOfferObject = () => ({
   title: 'Сдается жильё!',
-  address: `{{location.${shirota}}}, {{location.${dolgota}}}`,
+  address: `{{location.${location.shirota}}}, {{location.${location.dolgota}}}`,
   price: getRandomIntInclusive(1000, 5000) ,
   type: typeFlatArr[getRandomIntInclusive(0, typeFlatArr.length-1)],
   rooms: getRandomIntInclusive(1, 5),
@@ -34,18 +33,22 @@ const createOfferObject = () => ({
 });
 
 const createLocationObject = () => ({
-  lat: shirota,
-  lng: dolgota,
-});
-const rentalAnnouncement =  ()=> ({
-  author:  createAuthorObject(),
-  offer: createOfferObject(),
-  location: createLocationObject(),
+  lat: getRandomIntDrob(35.31513, 36.26421, 5),
+  lng: getRandomIntDrob(139.31213, 140.01251, 5),
 });
 
+const rentalAnnouncement =  () => {
+  const location = createLocationObject();
+  return {
+    author:  createAuthorObject(),
+    offer: createOfferObject(),
+    location: location,
+  };
+};
 
-const rentalAnnouncements = () => {
-  const newArr = new Array().fill(null).map(() => rentalAnnouncement());
+
+const rentalAnnouncements = (COUNT_ELEMENTS) => {
+  const newArr = new Array(COUNT_ELEMENTS).fill(null).map(() => rentalAnnouncement());
   return newArr;
 };
 export {rentalAnnouncements};

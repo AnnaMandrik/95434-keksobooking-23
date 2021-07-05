@@ -20,14 +20,14 @@ const createMap = (callback) => {
     },
   ).addTo(map);
 };
-
+let mainPinMarker;
 const createMinPinIcon = () => {
   const mainPinIcon = L.icon({
     iconUrl: '../img/main-pin.svg',
     iconSize: [52, 52],
     iconAnchor: [26, 52],
   });
-  const mainPinMarker = L.marker (
+  mainPinMarker = L.marker (
     {
       lat: 35.68945,
       lng: 139.69255,
@@ -42,6 +42,9 @@ const createMinPinIcon = () => {
     const addressPoint = evt.target.getLatLng();
     address.value = `${addressPoint.lat.toFixed(5)}, ${addressPoint.lng.toFixed(5)}`;
   });
+};
+
+const returnMainPinIcon = () => {
   resetButton.addEventListener('click', () => {
     mainPinMarker.setLatLng({
       lat: 35.68945,
@@ -85,4 +88,4 @@ const createManyMarkers = (objects) => {
   });
 };
 
-export {createMap, createMinPinIcon, createManyMarkers};
+export {createMap, createMinPinIcon, returnMainPinIcon, createManyMarkers};

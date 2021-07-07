@@ -1,18 +1,18 @@
 import {createCardElement} from './popup.js';
 
-const LAT_TOKYO_CENTER = 35.6894;
+const LAT_TOKYO_CENTER = 35.68945;
 const LNG_TOKYO_CENTER = 139.69224;
 const address = document.querySelector('#address');
 const resetButton = document.querySelector('.ad-form__reset');
 let map;
 
-const createMap = (callback) => {
+const createMap = (cb) => {
   map = L.map('map-canvas');
-  map.on('load', callback);
+  map.on('load', cb);
   map.setView({
     lat: LAT_TOKYO_CENTER,
     lng: LNG_TOKYO_CENTER,
-  }, 10);
+  }, 12);
   L.tileLayer(
     'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
     {
@@ -29,8 +29,8 @@ const createMinPinIcon = () => {
   });
   mainPinMarker = L.marker (
     {
-      lat: 35.68945,
-      lng: 139.69255,
+      lat: LAT_TOKYO_CENTER,
+      lng: LNG_TOKYO_CENTER,
     },
     {
       draggable: true,
@@ -47,15 +47,15 @@ const createMinPinIcon = () => {
 const returnMainPinIcon = () => {
   resetButton.addEventListener('click', () => {
     mainPinMarker.setLatLng({
-      lat: 35.68945,
-      lng: 139.69255,
+      lat: LAT_TOKYO_CENTER,
+      lng: LNG_TOKYO_CENTER,
     },
     address.value = '',
     );
     map.setView({
-      lat: 35.6894,
-      lng: 139.69224,
-    }, 10);},
+      lat: LAT_TOKYO_CENTER,
+      lng: LNG_TOKYO_CENTER,
+    }, 12);},
   address.value = '',
   );
 };

@@ -3,7 +3,6 @@ import {createCardElement} from './popup.js';
 const LAT_TOKYO_CENTER = 35.68945;
 const LNG_TOKYO_CENTER = 139.69224;
 const address = document.querySelector('#address');
-const resetButton = document.querySelector('.ad-form__reset');
 let map;
 
 const createMap = (cb) => {
@@ -45,19 +44,16 @@ const createMinPinIcon = () => {
 };
 
 const returnMainPinIcon = () => {
-  resetButton.addEventListener('click', () => {
-    mainPinMarker.setLatLng({
-      lat: LAT_TOKYO_CENTER,
-      lng: LNG_TOKYO_CENTER,
-    },
-    address.value = '',
-    );
-    map.setView({
-      lat: LAT_TOKYO_CENTER,
-      lng: LNG_TOKYO_CENTER,
-    }, 12);},
+  mainPinMarker.setLatLng({
+    lat: LAT_TOKYO_CENTER,
+    lng: LNG_TOKYO_CENTER,
+  },
   address.value = '',
   );
+  map.setView({
+    lat: LAT_TOKYO_CENTER,
+    lng: LNG_TOKYO_CENTER,
+  }, 12);
 };
 
 const createMarker = (object) => {

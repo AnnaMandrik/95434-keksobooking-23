@@ -33,9 +33,6 @@ const showErrorMessage = () => {
   document.addEventListener('click', () => {
     errorMessage.classList.add('hidden');
   });
-  document.addEventListener('click', () => {
-    errorMessage.classList.add('hidden');
-  });
 };
 
 const returnOriginalState = () => {

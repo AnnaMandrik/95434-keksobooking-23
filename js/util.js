@@ -1,7 +1,7 @@
 /*https://developer.mozilla.org/ru/docs/Web/JavaScript/Reference/Global_Objects/Math/random#%D0%BF%D0%BE%D0%BB%D1%83%D1%87%D0%B5%D0%BD%D0%B8%D0%B5_%D1%81%D0%BB%D1%83%D1%87%D0%B0%D0%B9%D0%BD%D0%BE%D0%B3%D0%BE_%D1%86%D0%B5%D0%BB%D0%BE%D0%B3%D0%BE_%D1%87%D0%B8%D1%81%D0%BB%D0%B0_%D0%B2_%D0%B7%D0%B0%D0%B4%D0%B0%D0%BD%D0%BD%D0%BE%D0%BC_%D0%B8%D0%BD%D1%82%D0%B5%D1%80%D0%B2%D0%B0%D0%BB%D0%B5_%D0%B2%D0%BA%D0%BB%D1%8E%D1%87%D0%B8%D1%82%D0%B5%D0%BB%D1%8C%D0%BD%D0%BE
 функция взята из источника по ссылке сверху */
 
-const ALERT_SHOW_TIME = 10000;
+const ALERT_SHOW_TIME = 5000;
 
 function getRandomIntInclusive (firstNumber, secondNumber) {
   firstNumber = Math.ceil(firstNumber);
@@ -60,14 +60,14 @@ const removeChildrens = ((parent) => {
 const isEscEvent = (evt) => evt.key === 'Escape' || evt.key === 'Esc';
 
 const errorOfRequest = (message) => {
-  const errorContainer = document.querySelector('div');
-  errorContainer.style.zIndex = 100;
+  const errorContainer = document.querySelector('.error-server');
+  errorContainer.style.zIndex = 1000;
   errorContainer.style.position = 'absolute';
   errorContainer.style.left = 0;
   errorContainer.style.top = 0;
   errorContainer.style.right = 0;
   errorContainer.style.padding = '10px 3px';
-  errorContainer.style.fontSize = '30px';
+  errorContainer.style.fontSize = '50px';
   errorContainer.style.textAlign = 'center';
   errorContainer.style.backgroundColor = 'red';
 

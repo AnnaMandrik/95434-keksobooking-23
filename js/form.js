@@ -1,5 +1,3 @@
-import {returnMainPinIcon} from './map.js';
-
 const MIN_TITLE_LENGTH = 30;
 const MAX_TITLE_LENGTH = 100;
 const NAX_PRICE = 1000000;
@@ -18,80 +16,27 @@ const timeIn = document.querySelector('#timein');
 const timeOut = document.querySelector('#timeout');
 const roomNumber = document.querySelector('#room_number');
 const bedNumber = document.querySelector('#capacity');
-const formSubmit = document.querySelector('.ad-form');
-const successMessage = document.querySelector('#success').content.querySelector('.success').cloneNode(true);
-const errorMessage = document.querySelector('#error').content.querySelector('.error').cloneNode(true);
-const errorButton = document.querySelector('.error__button');
-const resetButton = document.querySelector('.ad-form__reset');
-
-const showSuccessMessage = () => {
-  document.body.appendChild(successMessage);
-  document.addEventListener('keydown', (evt) => {
-    if (evt.key === 'Escape' || evt.key === 'Esc') {
-      evt.preventDefault();
-      successMessage.classList.add('hidden');
-    }
-  });
-  document.addEventListener('click', () => {
-    successMessage.classList.add('hidden');
-  });
-};
 
 
-const showErrorMessage = () => {
-  document.body.appendChild(errorMessage);
-  document.addEventListener('keydown', (evt) => {
-    if (evt.key === 'Escape' || evt.key === 'Esc') {
-      evt.preventDefault();
-      errorMessage.classList.add('hidden');
-    }
-  });
-  document.addEventListener('click', () => {
-    errorMessage.classList.add('hidden');
-  });
-  document.addEventListener('click', () => {
-    errorButton.classList.add('hidden');
-  });
-};
-showErrorMessage();
-
-const returnOriginalState = () => {
-  formSubmit.reset();
-  returnMainPinIcon();
-  priceNoticeInput.min = MIN_RESIDENCE_PRICE.flat;
-  priceNoticeInput.placeholder = MIN_RESIDENCE_PRICE.flat;
-};
-
-const reportSuccess = () => {
-  showSuccessMessage();
-  returnOriginalState();
-};
-reportSuccess();
-
-resetButton.addEventListener('click', () => {
-  returnOriginalState();
-});
-
-
-titleNoticeInput.addEventListener('invalid', () => {
+const onTitleNoticeInputValid = () => {
   if (titleNoticeInput.validity.valueMissing) {
     titleNoticeInput.setCustomValidity('Обязательное текстовое  поле');
   } else {
     titleNoticeInput.setCustomValidity('');
   }
 
-});
+};
 
-priceNoticeInput.addEventListener('invalid', () => {
+const onPriceNoticeInputValid = () => {
   if (priceNoticeInput.validity.valueMissing) {
     priceNoticeInput.setCustomValidity('Обязательное числовое  поле');
   } else {
     priceNoticeInput.setCustomValidity('');
   }
 
-});
+};
 
-titleNoticeInput.addEventListener('input', () => {
+const onTitleNoticeInput = () => {
   const valueLength = titleNoticeInput.value.length;
 
   if (valueLength < MIN_TITLE_LENGTH) {
@@ -101,34 +46,32 @@ titleNoticeInput.addEventListener('input', () => {
   } else {
     titleNoticeInput.setCustomValidity('');
   }
-});
+};
 
 
-typeOfResidence.addEventListener('change', () => {
+const onTypeOfResidence = () => {
   const minPrice = MIN_RESIDENCE_PRICE[typeOfResidence.value];
   priceNoticeInput.placeholder = minPrice;
   priceNoticeInput.min = minPrice;
-});
+};
 
-priceNoticeInput.addEventListener('input', () => {
+const onPriceNoticeInput = () => {
   if (priceNoticeInput.value > NAX_PRICE) {
     priceNoticeInput.setCustomValidity(`Максимальная цена - ${NAX_PRICE} руб.`);
   } else {
     priceNoticeInput.setCustomValidity('');
   }
-});
+};
 
 
-const timeInOut = (evt) => {
+const onTimeInOut = (evt) => {
   const newValue = evt.target.value;
   timeIn.value = newValue;
   timeOut.value = newValue;
 };
 
-timeIn.addEventListener('change', timeInOut);
-timeOut.addEventListener('change', timeInOut);
 
-const getRoomBedNumber = () => {
+const onRoomBedNumberChange = () => {
   const bedValue = bedNumber.value;
   const roomValue = roomNumber.value;
 
@@ -142,5 +85,23 @@ const getRoomBedNumber = () => {
   bedNumber.reportValidity();
 };
 
-roomNumber.addEventListener ('change', getRoomBedNumber);
-bedNumber.addEventListener ('change', getRoomBedNumber);
+
+const checkValidation = () => {
+  titleNoticeInput.addEventListener('invalid', onTitleNoticeInputValid);
+  priceNoticeInput.addEventListener('invalid', onPriceNoticeInputValid);
+  titleNoticeInput.addEventListener('input', onTitleNoticeInput);
+  typeOfResidence.addEventListener('change', onTypeOfResidence);
+  priceNoticeInput.addEventListener('input', onPriceNoticeInput);
+  timeIn.addEventListener('change', onTimeInOut);
+  timeOut.addEventListener('change', onTimeInOut);
+  roomNumber.addEventListener ('change', onRoomBedNumberChange);
+  bedNumber.addEventListener ('change', onRoomBedNumberChange);
+};
+
+
+const priceNotice = () => {
+  priceNoticeInput.min = MIN_RESIDENCE_PRICE.flat;
+  priceNoticeInput.placeholder = MIN_RESIDENCE_PRICE.flat;
+};
+
+export {checkValidation, priceNotice};

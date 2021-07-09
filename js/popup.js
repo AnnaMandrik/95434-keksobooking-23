@@ -1,3 +1,4 @@
+import {removeChildrens} from './util.js';
 
 const ORIGINALS = ['flat', 'bungalow', 'house', 'palace', 'hotel'];
 const TRANSLATES = ['Квартира', 'Бунгало', 'Дом', 'Дворец', 'Отель'];
@@ -11,11 +12,6 @@ const getTypeTranslate = (() => {
   }
 });
 
-const removeChildrens = ((parent) => {
-  for (let index = parent.children.length - 1; index >= 0; index--) {
-    parent.children[index].remove();
-  }
-});
 
 const createCardElement = (object) => {
 
@@ -51,29 +47,36 @@ const createCardElement = (object) => {
   } else {
     cardElement.querySelector('.popup__text--time').remove();
   }
-  const features = cardElement.querySelector('.popup__features');
-  const modifiers = object.offer.features.map((feature) => `popup__feature--${feature}`);
-  features.querySelectorAll('.popup__feature').forEach((item) => {
-    const modifier = item.classList[1];
-    if (!modifiers.includes(modifier)) {
-      item.remove();
-    }
-  });
+  const featureElement = cardElement.querySelector('.popup__features');
+  featureElement.innerHTML = '';
+  const features = object.offer.features;
+  if (features) {
+    features.forEach((item) => {
+      const liElement = document.createElement('li');
+      liElement.classList.add('.popup__features');
+      liElement.classList.add(`popup__feature--${item}`);
+      featureElement.appendChild(liElement);
+    });
+  }
   if(object.offer.description) {
     cardElement.querySelector('.popup__description').textContent = object.offer.description;
   } else {
     cardElement.querySelector('.popup__description').remove();
   }
-  const photos = cardElement.querySelector('.popup__photos');
-  removeChildrens(photos);
-  for (let index = 0; index < object.offer.photos.length; index++) {
-    const img = document.createElement('img');
-    img.src = object.offer.photos[index];
-    img.classList.add('popup__photo');
-    img.width = 45;
-    img.height = 40;
-    img.alt = 'Фотография жилья';
-    photos.appendChild(img);
+
+  const photosElements = object.offer.photos;
+  const photoElement = cardElement.querySelector('.popup__photos');
+  removeChildrens(photoElement);
+  if (photosElements){
+    photosElements.forEach((item) => {
+      const img = document.createElement('img');
+      img.src = item;
+      img.classList.add('popup__photo');
+      img.width = 45;
+      img.height = 40;
+      img.alt = 'Фотография жилья';
+      photoElement.appendChild(img);
+    });
   }
   if (object.author.avatar) {
     cardElement.querySelector('.popup__avatar').src = object.author.avatar;

@@ -1,7 +1,8 @@
 import {createCardElement} from './popup.js';
 
-const LAT_TOKYO_CENTER = 35.68945;
-const LNG_TOKYO_CENTER = 139.69224;
+
+const LAT_TOKYO_CENTER = (35.680174645).toFixed(5);
+const LNG_TOKYO_CENTER = (139.7539934567).toFixed(5);
 const address = document.querySelector('#address');
 let map;
 
@@ -56,8 +57,9 @@ const returnMainPinIcon = () => {
   }, 12);
 };
 
-const createMarker = (object) => {
-  const markerGroup = L.layerGroup().addTo(map);
+const markerGroup = L.layerGroup();
+const createMarkers = (object) => {
+  markerGroup.addTo(map);
   const lat = object.location.lat;
   const lng = object.location.lng;
   const pinIcon = L.icon({
@@ -71,17 +73,22 @@ const createMarker = (object) => {
       lng,
     },
     { icon: pinIcon,
-    },
-  );
-  pinMarker.addTo(markerGroup).bindPopup(createCardElement(object),
-    {
-      keepInView: true,
     });
-};
-const createManyMarkers = (objects) => {
-  objects.forEach((object) => {
-    createMarker(object);
-  });
+  pinMarker.addTo(markerGroup).
+    bindPopup(() => createCardElement(object),
+      {
+        keepInView: true,
+      });
+
 };
 
-export {createMap, createMinPinIcon, returnMainPinIcon, createManyMarkers};
+const createManyMarkers = (objects) => {
+  objects.forEach((object) => {
+    createMarkers(object);
+  });
+};
+const removeManyMarkers = () => {
+  markerGroup.clearLayers();
+};
+export {createMap, createMinPinIcon, returnMainPinIcon, createManyMarkers, removeManyMarkers};
+

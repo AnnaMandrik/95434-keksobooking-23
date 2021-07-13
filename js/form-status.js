@@ -1,11 +1,13 @@
 import {returnMainPinIcon} from './map.js';
 import {isEscEvent} from './util.js';
 import {priceNotice} from './form.js';
+import {deleteFilters} from './filter.js';
 
-
+const ALERT_SHOW_TIME = 5000;
 const formSubmit = document.querySelector('.ad-form');
 const successMessage = document.querySelector('#success').content.querySelector('.success').cloneNode(true);
 const errorMessage = document.querySelector('#error').content.querySelector('.error').cloneNode(true);
+const errorOfRequest = document.querySelector('#error-request').content.querySelector('.error').cloneNode(true);
 const resetButton = document.querySelector('.ad-form__reset');
 
 const showSuccessMessage = () => {
@@ -34,6 +36,13 @@ const showErrorMessage = () => {
     errorMessage.classList.add('hidden');
   });
 };
+const showErrorOfRequest = () => {
+  document.body.appendChild(errorOfRequest);
+  setTimeout(() => {
+    errorOfRequest.remove();
+  }, ALERT_SHOW_TIME);
+
+};
 
 const returnOriginalState = () => {
   formSubmit.reset();
@@ -44,12 +53,15 @@ const returnOriginalState = () => {
 const reportSuccess = () => {
   showSuccessMessage();
   returnOriginalState();
+  deleteFilters();
 };
 
 const onResetButton = () => {
   resetButton.addEventListener('click', () => {
     returnOriginalState();
+    deleteFilters();
+
   });
 };
 
-export {showErrorMessage, onResetButton, reportSuccess};
+export {showErrorMessage, onResetButton, reportSuccess, showErrorOfRequest};

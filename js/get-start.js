@@ -1,14 +1,14 @@
-import {showErrorMessage, onResetButton, reportSuccess, showErrorOfRequest} from './form-status.js';
+import {showErrorMessage, showErrorOfRequest, showSuccessMessage, returnOriginalState, onResetButton} from './form-status.js';
 import {checkValidation} from './form.js';
 import {getData, sendData} from'./api.js';
-import {createMap, createMinPinIcon, createManyMarkers} from'./map.js';
+import {createMap, createMinPinIcon, createManyMarkers, removeManyMarkers} from'./map.js';
 import {enableForm} from './main-page.js';
-import {createFilterNotice, onMapFilters, deleteFilters} from './filter.js';
+import {createFilterNotice, deleteFilters, onMapFilters, onResetButtonFilter, COUNT_DATA_NOTICE} from './filter.js';
 import {debounce} from './utils/debounce.js';
 
-const COUNT_DATA_NOTICE = 10;
 const DELAY_BOUNCE = 500;
 const filterNoticeFragment = document.querySelector('.map__filters');
+
 
 const getStart = () => {
   createMap(() => {
@@ -22,21 +22,27 @@ const getStart = () => {
         DELAY_BOUNCE,
         ));
         checkValidation();
-        sendData(() => {
-          reportSuccess();
-          deleteFilters(objects);
-        },
-        () => showErrorMessage());
-        onResetButton();
+        sendData(
+          () => {
+            showSuccessMessage();
+            returnOriginalState();
+            deleteFilters(objects);
+            removeManyMarkers();
+            createManyMarkers(objects.slice(0, COUNT_DATA_NOTICE));
+          },
+          () => showErrorMessage());
+        onResetButtonFilter(objects);
       },
       () => {
         showErrorOfRequest();
         filterNoticeFragment.classList.add('hidden');
         checkValidation();
-        sendData(() => {
-          reportSuccess();
-        },
-        () => showErrorMessage());
+        sendData(
+          () => {
+            showSuccessMessage();
+            returnOriginalState();
+          },
+          () => showErrorMessage());
         onResetButton();
       });
   });

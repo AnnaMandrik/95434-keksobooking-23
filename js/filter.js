@@ -1,7 +1,7 @@
-import {createManyMarkers} from './map.js';
-import {removeManyMarkers} from './map.js';
+import {createManyMarkers, removeManyMarkers} from './map.js';
+import {returnOriginalState} from './form-status.js';
 
-
+const COUNT_DATA_NOTICE = 10;
 const VALUE_ANY = 'any';
 const MIN_PRICE = 10000;
 const MAX_PRICE = 50000;
@@ -11,17 +11,36 @@ const housingPrice = document.querySelector('#housing-price');
 const housingRooms = document.querySelector('#housing-rooms');
 const housingGuests = document.querySelector('#housing-guests');
 const housingFeatures = document.querySelector('#housing-features');
+const resetButton = document.querySelector('.ad-form__reset');
 
 const filterType = (object) => {
-  housingType.value === VALUE_ANY || (object.offer.type === housingType.value);
+  if (housingType.value === VALUE_ANY) {
+    return true;
+  } else if (housingType.value !== VALUE_ANY) {
+    return  housingType.value === object.offer.type;
+  } else {
+    return false;
+  }
 };
 
 const filterRooms = (object) => {
-  housingRooms.value === VALUE_ANY || (object.offer.rooms === housingRooms.value);
+  if (housingRooms.value === VALUE_ANY) {
+    return true;
+  } else if (housingRooms.value !== VALUE_ANY) {
+    return   Number(housingRooms.value) === object.offer.rooms;
+  } else {
+    return false;
+  }
 };
 
 const filterGuests = (object) => {
-  housingGuests.value === VALUE_ANY || (object.offer.guests === housingGuests.value);
+  if (housingGuests.value === VALUE_ANY) {
+    return true;
+  } else if (housingGuests.value !== VALUE_ANY) {
+    return  Number(housingGuests.value) === object.offer.guests;
+  } else {
+    return false;
+  }
 };
 
 const filterPrice = (object) => {
@@ -29,10 +48,12 @@ const filterPrice = (object) => {
     return true;
   } else if (housingPrice.value === 'low') {
     return (object.offer.price < MIN_PRICE);
-  } else if (housingPrice === 'high') {
+  } else if (housingPrice.value === 'high') {
     return (object.offer.price > MAX_PRICE);
   } else if (housingPrice.value === 'middle') {
-    return (object.offer.price > MIN_PRICE && object.offer.price < MAX_PRICE);
+    return (object.offer.price >= MIN_PRICE && object.offer.price <= MAX_PRICE);
+  } else {
+    return false;
   }
 };
 
@@ -47,38 +68,58 @@ const filterFeauters = (object) => {
 };
 
 
-const filterNotice = (object) => filterType(object) &&
-  filterRooms(object) &&
-  filterGuests(object) &&
-  filterPrice(object) &&
-  filterFeauters(object);
+const filterNotice = (object) => {
+
+  const resultfilterType = filterType(object);
+  const resultfilterRooms =  filterRooms(object);
+  const resultfilterGuests = filterGuests(object);
+  const resultfilterPrice = filterPrice(object);
+  const resultfilterFeauters = filterFeauters(object);
+
+  return resultfilterType && resultfilterRooms && resultfilterGuests && resultfilterPrice && resultfilterFeauters;
+
+
+};
 
 const getFilterArrays = (objects) => {
   const filterArrays = [];
-  for (let index = 0; index < objects.length; index ++) {
-    const indexOfArr = objects[index];
-    if (filterNotice(indexOfArr)) {
-      filterArrays.push(indexOfArr);
+
+  for (let index = 0; index < objects.length; index++) {
+    const activeObject = objects[index];
+
+    if (filterNotice(activeObject)) {
+      filterArrays.push(activeObject);
     }
-    if (filterArrays === 10) {
-      break;
-    }
-    return filterArrays;
   }
+  return filterArrays.slice(0, COUNT_DATA_NOTICE);
 };
 
 const createFilterNotice = (objects) => {
   const filterObjects = getFilterArrays(objects);
+
   createManyMarkers(filterObjects);
 };
 
 const onMapFilters = (cb) => {
-  mapFilters.addEventListener('change', () => cb());
-  removeManyMarkers();
+  mapFilters.addEventListener('change', () => {
+    removeManyMarkers();
+    cb();},
+  );
+
 };
 
 const deleteFilters = () => {
   mapFilters.reset();
 };
 
-export {createFilterNotice, onMapFilters, deleteFilters};
+
+const onResetButtonFilter = (objects) => {
+  resetButton.addEventListener('click', () => {
+    deleteFilters(objects);
+    removeManyMarkers();
+    createManyMarkers(objects.slice(0, COUNT_DATA_NOTICE));
+    returnOriginalState();
+  });
+};
+
+export {createFilterNotice, deleteFilters, onMapFilters, onResetButtonFilter, COUNT_DATA_NOTICE};

@@ -1,7 +1,6 @@
 import {returnMainPinIcon} from './map.js';
 import {isEscEvent} from './util.js';
 import {priceNotice} from './form.js';
-import {deleteFilters} from './filter.js';
 
 const ALERT_SHOW_TIME = 5000;
 const formSubmit = document.querySelector('.ad-form');
@@ -35,6 +34,10 @@ const showErrorMessage = () => {
   document.addEventListener('click', () => {
     errorMessage.classList.add('hidden');
   });
+  const errorButton = document.querySelector('.error__button');
+  errorButton.addEventListener('click', () => {
+    errorMessage.classList.add('hidden');
+  });
 };
 const showErrorOfRequest = () => {
   document.body.appendChild(errorOfRequest);
@@ -50,18 +53,11 @@ const returnOriginalState = () => {
   priceNotice();
 };
 
-const reportSuccess = () => {
-  showSuccessMessage();
-  returnOriginalState();
-  deleteFilters();
-};
-
 const onResetButton = () => {
   resetButton.addEventListener('click', () => {
     returnOriginalState();
-    deleteFilters();
-
   });
 };
 
-export {showErrorMessage, onResetButton, reportSuccess, showErrorOfRequest};
+
+export {showSuccessMessage, showErrorMessage, returnOriginalState, showErrorOfRequest, onResetButton};

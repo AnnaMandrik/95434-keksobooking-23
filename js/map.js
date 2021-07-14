@@ -90,5 +90,6 @@ const createManyMarkers = (objects) => {
 const removeManyMarkers = () => {
   markerGroup.clearLayers();
 };
+
 export {createMap, createMinPinIcon, returnMainPinIcon, createManyMarkers, removeManyMarkers};
 

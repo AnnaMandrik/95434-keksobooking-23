@@ -2,10 +2,11 @@ import {returnMainPinIcon} from './map.js';
 import {isEscEvent} from './util.js';
 import {priceNotice} from './form.js';
 
-
+const ALERT_SHOW_TIME = 5000;
 const formSubmit = document.querySelector('.ad-form');
 const successMessage = document.querySelector('#success').content.querySelector('.success').cloneNode(true);
 const errorMessage = document.querySelector('#error').content.querySelector('.error').cloneNode(true);
+const errorOfRequest = document.querySelector('#error-request').content.querySelector('.error').cloneNode(true);
 const resetButton = document.querySelector('.ad-form__reset');
 
 const showSuccessMessage = () => {
@@ -33,6 +34,17 @@ const showErrorMessage = () => {
   document.addEventListener('click', () => {
     errorMessage.classList.add('hidden');
   });
+  const errorButton = document.querySelector('.error__button');
+  errorButton.addEventListener('click', () => {
+    errorMessage.classList.add('hidden');
+  });
+};
+const showErrorOfRequest = () => {
+  document.body.appendChild(errorOfRequest);
+  setTimeout(() => {
+    errorOfRequest.remove();
+  }, ALERT_SHOW_TIME);
+
 };
 
 const returnOriginalState = () => {
@@ -41,15 +53,11 @@ const returnOriginalState = () => {
   priceNotice();
 };
 
-const reportSuccess = () => {
-  showSuccessMessage();
-  returnOriginalState();
-};
-
 const onResetButton = () => {
   resetButton.addEventListener('click', () => {
     returnOriginalState();
   });
 };
 
-export {showErrorMessage, onResetButton, reportSuccess};
+
+export {showSuccessMessage, showErrorMessage, returnOriginalState, showErrorOfRequest, onResetButton};

@@ -1,16 +1,12 @@
 import {removeChildrens} from './util.js';
 
-const ORIGINALS = ['flat', 'bungalow', 'house', 'palace', 'hotel'];
-const TRANSLATES = ['Квартира', 'Бунгало', 'Дом', 'Дворец', 'Отель'];
-
-
-const getTypeTranslate = (() => {
-  for (let index = 0; index < ORIGINALS.length; index++) {
-    if(ORIGINALS[index]) {
-      return TRANSLATES[index];
-    }
-  }
-});
+const TYPE_NAME = {
+  flat: 'Квартира',
+  bungalow: 'Бунгало',
+  house: 'Дом',
+  hotel: 'Отель',
+  palace: 'Дворец',
+};
 
 
 const createCardElement = (object) => {
@@ -33,7 +29,7 @@ const createCardElement = (object) => {
     cardElement.querySelector('.popup__text--price').remove();
   }
   if (object.offer.type) {
-    cardElement.querySelector('.popup__type').textContent = getTypeTranslate(object.offer.type);
+    cardElement.querySelector('.popup__type').textContent = TYPE_NAME[object.offer.type];
   } else {
     cardElement.querySelector('.popup__type').remove();
   }
@@ -43,17 +39,18 @@ const createCardElement = (object) => {
     cardElement.querySelector('.popup__text--capacity').remove();
   }
   if (object.offer.checkin || object.offer.checkout) {
-    cardElement.querySelector('.popup__text--time').textContent = `Заезд после ${object.offer.checkin} выезд до ${object.offer.checkout}`;
+    cardElement.querySelector('.popup__text--time').textContent = `Заезд после ${object.offer.checkin}, выезд до ${object.offer.checkout}`;
   } else {
     cardElement.querySelector('.popup__text--time').remove();
   }
+
+  const featuresElements = object.offer.features;
   const featureElement = cardElement.querySelector('.popup__features');
-  featureElement.innerHTML = '';
-  const features = object.offer.features;
-  if (features) {
-    features.forEach((item) => {
+  removeChildrens(featureElement);
+  if (featuresElements) {
+    featuresElements.forEach((item) => {
       const liElement = document.createElement('li');
-      liElement.classList.add('.popup__features');
+      liElement.classList.add('popup__feature');
       liElement.classList.add(`popup__feature--${item}`);
       featureElement.appendChild(liElement);
     });

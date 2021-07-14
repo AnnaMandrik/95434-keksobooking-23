@@ -101,7 +101,7 @@ const checkValidation = () => {
 
 const priceNotice = () => {
   priceNoticeInput.min = MIN_RESIDENCE_PRICE.flat;
-  priceNoticeInput.placeholder = MIN_RESIDENCE_PRICE.flat;
+  priceNoticeInput.placeholder = MIN_RESIDENCE_PRICE.house;
 };
 
 export {checkValidation, priceNotice};

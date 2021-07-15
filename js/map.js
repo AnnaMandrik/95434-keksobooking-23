@@ -79,7 +79,6 @@ const createMarkers = (object) => {
       {
         keepInView: true,
       });
-
 };
 
 const createManyMarkers = (objects) => {
@@ -87,6 +86,7 @@ const createManyMarkers = (objects) => {
     createMarkers(object);
   });
 };
+
 const removeManyMarkers = () => {
   markerGroup.clearLayers();
 };

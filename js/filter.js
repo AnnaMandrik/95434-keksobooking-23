@@ -78,7 +78,6 @@ const filterNotice = (object) => {
 
   return resultfilterType && resultfilterRooms && resultfilterGuests && resultfilterPrice && resultfilterFeauters;
 
-
 };
 
 const getFilterArrays = (objects) => {

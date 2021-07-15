@@ -9,53 +9,54 @@ const errorMessage = document.querySelector('#error').content.querySelector('.er
 const errorOfRequest = document.querySelector('#error-request').content.querySelector('.error').cloneNode(true);
 const resetButton = document.querySelector('.ad-form__reset');
 
+
+const successHidden = () => {
+  successMessage.classList.add('hidden');
+};
 const onSuccessEscKeydown = (evt) => {
   if (isEscEvent(evt)) {
     evt.preventDefault();
-    closeSuccessMessege();
+    successHidden();
   }
 };
 const onSuccessClick = () => {
-  closeSuccessMessege();
+  successHidden();
 };
-
-const closeSuccessMessege = () => {
-  successMessage.classList.add('hidden');
+const closeSuccess = () => {
   document.removeEventListener('keydown', onSuccessEscKeydown);
   document.removeEventListener('click', onSuccessClick);
 };
 const showSuccessMessage = () => {
   document.body.appendChild(successMessage);
-  document.addEventListener('keydown', onSuccessEscKeydown);
-  document.addEventListener('click', onSuccessClick);
+  document.addEventListener('keydown', onSuccessEscKeydown, closeSuccess);
+  document.addEventListener('click', onSuccessClick, closeSuccess);
 };
 
-
+const errorHidden = () => {
+  errorMessage.classList.add('hidden');
+};
 const onErrorEscKeydown = (evt) => {
   if (isEscEvent(evt)) {
     evt.preventDefault();
-    closeErrorMessege();
+    errorHidden();
   }
 };
 const onErrorClick = () => {
-  closeErrorMessege();
+  errorHidden();
 };
-
-const showErrorMessage = () => {
-  document.body.appendChild(errorMessage);
-  document.addEventListener('keydown', onErrorEscKeydown);
-  document.addEventListener('click', onErrorClick);
-  const errorButton = document.querySelector('.error__button');
-  errorButton.addEventListener('click', () => {
-    errorMessage.classList.add('hidden');
-  });
-};
-const closeErrorMessege = () => {
-  errorMessage.classList.add('hidden');
+const closeError = () => {
   document.removeEventListener('keydown', onErrorEscKeydown);
   document.removeEventListener('click', onErrorClick);
 };
-
+const showErrorMessage = () => {
+  document.body.appendChild(errorMessage);
+  document.addEventListener('keydown', onErrorEscKeydown, closeError);
+  document.addEventListener('click', onErrorClick, closeError);
+  const errorButton = document.querySelector('.error__button');
+  errorButton.addEventListener('click', () => {
+    errorHidden();
+  });
+};
 
 const showErrorOfRequest = () => {
   document.body.appendChild(errorOfRequest);

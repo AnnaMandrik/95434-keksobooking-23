@@ -18,27 +18,24 @@ const roomNumber = document.querySelector('#room_number');
 const bedNumber = document.querySelector('#capacity');
 
 
-const onTitleNoticeInputValid = () => {
+const onTitleNoticeInputInvalid = () => {
   if (titleNoticeInput.validity.valueMissing) {
     titleNoticeInput.setCustomValidity('Обязательное текстовое  поле');
   } else {
     titleNoticeInput.setCustomValidity('');
   }
-
 };
 
-const onPriceNoticeInputValid = () => {
+const onPriceNoticeInputInvalid = () => {
   if (priceNoticeInput.validity.valueMissing) {
     priceNoticeInput.setCustomValidity('Обязательное числовое  поле');
   } else {
     priceNoticeInput.setCustomValidity('');
   }
-
 };
 
 const onTitleNoticeInput = () => {
   const valueLength = titleNoticeInput.value.length;
-
   if (valueLength < MIN_TITLE_LENGTH) {
     titleNoticeInput.setCustomValidity(`Ещё ${MIN_TITLE_LENGTH - valueLength} симв.`);
   } else if (valueLength > MAX_TITLE_LENGTH) {
@@ -48,8 +45,7 @@ const onTitleNoticeInput = () => {
   }
 };
 
-
-const onTypeOfResidence = () => {
+const onTypeOfResidenceChange = () => {
   const minPrice = MIN_RESIDENCE_PRICE[typeOfResidence.value];
   priceNoticeInput.placeholder = minPrice;
   priceNoticeInput.min = minPrice;
@@ -63,18 +59,15 @@ const onPriceNoticeInput = () => {
   }
 };
 
-
-const onTimeInOut = (evt) => {
+const onTimeInOutChange = (evt) => {
   const newValue = evt.target.value;
   timeIn.value = newValue;
   timeOut.value = newValue;
 };
 
-
 const onRoomBedNumberChange = () => {
   const bedValue = bedNumber.value;
   const roomValue = roomNumber.value;
-
   if ( roomValue !== '100' && (bedValue > roomValue || bedValue === '0')) {
     bedNumber.setCustomValidity(`Доступны комнаты для не менее 1 и не более ${roomValue} гостей`);
   } else if (roomValue === '100' && bedValue !== '0') {
@@ -85,19 +78,17 @@ const onRoomBedNumberChange = () => {
   bedNumber.reportValidity();
 };
 
-
 const checkValidation = () => {
-  titleNoticeInput.addEventListener('invalid', onTitleNoticeInputValid);
-  priceNoticeInput.addEventListener('invalid', onPriceNoticeInputValid);
+  titleNoticeInput.addEventListener('invalid', onTitleNoticeInputInvalid);
+  priceNoticeInput.addEventListener('invalid', onPriceNoticeInputInvalid);
   titleNoticeInput.addEventListener('input', onTitleNoticeInput);
-  typeOfResidence.addEventListener('change', onTypeOfResidence);
+  typeOfResidence.addEventListener('change', onTypeOfResidenceChange);
   priceNoticeInput.addEventListener('input', onPriceNoticeInput);
-  timeIn.addEventListener('change', onTimeInOut);
-  timeOut.addEventListener('change', onTimeInOut);
+  timeIn.addEventListener('change', onTimeInOutChange);
+  timeOut.addEventListener('change', onTimeInOutChange);
   roomNumber.addEventListener ('change', onRoomBedNumberChange);
   bedNumber.addEventListener ('change', onRoomBedNumberChange);
 };
-
 
 const priceNotice = () => {
   priceNoticeInput.min = MIN_RESIDENCE_PRICE.flat;

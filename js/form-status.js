@@ -9,42 +9,67 @@ const errorMessage = document.querySelector('#error').content.querySelector('.er
 const errorOfRequest = document.querySelector('#error-request').content.querySelector('.error').cloneNode(true);
 const resetButton = document.querySelector('.ad-form__reset');
 
-const showSuccessMessage = () => {
-  document.body.appendChild(successMessage);
-  document.addEventListener('keydown', (evt) => {
-    if (isEscEvent(evt)) {
-      evt.preventDefault();
-      successMessage.classList.add('hidden');
-    }
-  });
-  document.addEventListener('click', () => {
-    successMessage.classList.add('hidden');
-  });
+const successHidden = () => {
+  successMessage.classList.add('hidden');
 };
 
+const onSuccessEscapeKeydown = (evt) => {
+  if (isEscEvent(evt)) {
+    evt.preventDefault();
+    successHidden();
+  }
+};
+
+const onSuccessClick = () => {
+  successHidden();
+};
+
+const closeSuccess = () => {
+  document.removeEventListener('keydown', onSuccessEscapeKeydown);
+  document.removeEventListener('click', onSuccessClick);
+};
+
+const showSuccessMessage = () => {
+  document.body.appendChild(successMessage);
+  document.addEventListener('keydown', onSuccessEscapeKeydown, closeSuccess);
+  document.addEventListener('click', onSuccessClick, closeSuccess);
+};
+
+const errorHidden = () => {
+  errorMessage.classList.add('hidden');
+};
+
+const onErrorEscapeKeydown = (evt) => {
+  if (isEscEvent(evt)) {
+    evt.preventDefault();
+    errorHidden();
+  }
+};
+
+const onErrorClick = () => {
+  errorHidden();
+};
+
+const closeError = () => {
+  document.removeEventListener('keydown', onErrorEscapeKeydown);
+  document.removeEventListener('click', onErrorClick);
+};
 
 const showErrorMessage = () => {
   document.body.appendChild(errorMessage);
-  document.addEventListener('keydown', (evt) => {
-    if (isEscEvent(evt)) {
-      evt.preventDefault();
-      errorMessage.classList.add('hidden');
-    }
-  });
-  document.addEventListener('click', () => {
-    errorMessage.classList.add('hidden');
-  });
+  document.addEventListener('keydown', onErrorEscapeKeydown, closeError);
+  document.addEventListener('click', onErrorClick, closeError);
   const errorButton = document.querySelector('.error__button');
   errorButton.addEventListener('click', () => {
-    errorMessage.classList.add('hidden');
+    errorHidden();
   });
 };
+
 const showErrorOfRequest = () => {
   document.body.appendChild(errorOfRequest);
   setTimeout(() => {
     errorOfRequest.remove();
   }, ALERT_SHOW_TIME);
-
 };
 
 const returnOriginalState = () => {
@@ -58,6 +83,5 @@ const onResetButton = () => {
     returnOriginalState();
   });
 };
-
 
 export {showSuccessMessage, showErrorMessage, returnOriginalState, showErrorOfRequest, onResetButton};

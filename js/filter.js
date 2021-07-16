@@ -67,26 +67,19 @@ const filterFeauters = (object) => {
   return [].every.call(checkedElements, (element) => object.offer.features.includes(element.value));
 };
 
-
 const filterNotice = (object) => {
-
   const resultfilterType = filterType(object);
   const resultfilterRooms =  filterRooms(object);
   const resultfilterGuests = filterGuests(object);
   const resultfilterPrice = filterPrice(object);
   const resultfilterFeauters = filterFeauters(object);
-
   return resultfilterType && resultfilterRooms && resultfilterGuests && resultfilterPrice && resultfilterFeauters;
-
-
 };
 
 const getFilterArrays = (objects) => {
   const filterArrays = [];
-
   for (let index = 0; index < objects.length; index++) {
     const activeObject = objects[index];
-
     if (filterNotice(activeObject)) {
       filterArrays.push(activeObject);
     }
@@ -96,7 +89,6 @@ const getFilterArrays = (objects) => {
 
 const createFilterNotice = (objects) => {
   const filterObjects = getFilterArrays(objects);
-
   createManyMarkers(filterObjects);
 };
 
@@ -105,13 +97,11 @@ const onMapFilters = (cb) => {
     removeManyMarkers();
     cb();},
   );
-
 };
 
 const deleteFilters = () => {
   mapFilters.reset();
 };
-
 
 const onResetButtonFilter = (objects) => {
   resetButton.addEventListener('click', () => {

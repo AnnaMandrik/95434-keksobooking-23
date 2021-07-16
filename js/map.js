@@ -1,6 +1,5 @@
 import {createCardElement} from './popup.js';
 
-
 const LAT_TOKYO_CENTER = (35.680174645).toFixed(5);
 const LNG_TOKYO_CENTER = (139.7539934567).toFixed(5);
 const address = document.querySelector('#address');
@@ -79,7 +78,6 @@ const createMarkers = (object) => {
       {
         keepInView: true,
       });
-
 };
 
 const createManyMarkers = (objects) => {
@@ -87,6 +85,7 @@ const createManyMarkers = (objects) => {
     createMarkers(object);
   });
 };
+
 const removeManyMarkers = () => {
   markerGroup.clearLayers();
 };

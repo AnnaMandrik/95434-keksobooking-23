@@ -9,7 +9,6 @@ import {debounce} from './utils/debounce.js';
 const DELAY_BOUNCE = 500;
 const filterNoticeFragment = document.querySelector('.map__filters');
 
-
 const getStart = () => {
   createMap(() => {
     enableForm();

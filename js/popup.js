@@ -8,9 +8,7 @@ const TYPE_NAME = {
   palace: 'Дворец',
 };
 
-
 const createCardElement = (object) => {
-
   const similarCardTemlate = document.querySelector('#card').content.querySelector('.popup');
   const cardElement = similarCardTemlate.cloneNode(true);
   if (object.offer.title) {
@@ -43,7 +41,6 @@ const createCardElement = (object) => {
   } else {
     cardElement.querySelector('.popup__text--time').remove();
   }
-
   const featuresElements = object.offer.features;
   const featureElement = cardElement.querySelector('.popup__features');
   removeChildrens(featureElement);
@@ -60,7 +57,6 @@ const createCardElement = (object) => {
   } else {
     cardElement.querySelector('.popup__description').remove();
   }
-
   const photosElements = object.offer.photos;
   const photoElement = cardElement.querySelector('.popup__photos');
   removeChildrens(photoElement);
@@ -80,9 +76,7 @@ const createCardElement = (object) => {
   } else {
     cardElement.querySelector('.popup__avatar').remove();
   }
-
   return cardElement;
-
 };
 
 export {createCardElement};

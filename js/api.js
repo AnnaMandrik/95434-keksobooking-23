@@ -18,7 +18,6 @@ const getData = (onSuccess, onError) => {
     .catch(() => {
       onError();
     });
-
 };
 
 const sendData = (onSuccess, onError) => {
@@ -41,6 +40,5 @@ const sendData = (onSuccess, onError) => {
       });
   });
 };
-
 
 export {getData, sendData};

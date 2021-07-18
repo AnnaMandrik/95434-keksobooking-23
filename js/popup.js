@@ -7,6 +7,8 @@ const TYPE_NAME = {
   hotel: 'Отель',
   palace: 'Дворец',
 };
+const PHOTO_WIDTH = 45;
+const PHOTO_HEIGHT = 40;
 
 const createCardElement = (object) => {
   const similarCardTemlate = document.querySelector('#card').content.querySelector('.popup');
@@ -65,8 +67,8 @@ const createCardElement = (object) => {
       const img = document.createElement('img');
       img.src = item;
       img.classList.add('popup__photo');
-      img.width = 45;
-      img.height = 40;
+      img.width = PHOTO_WIDTH;
+      img.height = PHOTO_HEIGHT;
       img.alt = 'Фотография жилья';
       photoElement.appendChild(img);
     });

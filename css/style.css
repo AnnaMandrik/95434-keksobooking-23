@@ -1028,3 +1028,8 @@ fieldset {
 .hidden {
   display: none;
 }
+
+
+.validation-error-red {
+  border: 5px red solid !important;
+}

@@ -2,6 +2,11 @@ import {createCardElement} from './popup.js';
 
 const LAT_TOKYO_CENTER = (35.680174645).toFixed(5);
 const LNG_TOKYO_CENTER = (139.7539934567).toFixed(5);
+const MAIN_ICONS_SIZE = [52, 52];
+const MAIN_ICONS_ANCHOR = [26, 52];
+const ICONS_SIZE = [40, 40];
+const ICONS_ANCHOR = [20, 40];
+
 const address = document.querySelector('#address');
 let map;
 
@@ -23,8 +28,8 @@ let mainPinMarker;
 const createMinPinIcon = () => {
   const mainPinIcon = L.icon({
     iconUrl: '../img/main-pin.svg',
-    iconSize: [52, 52],
-    iconAnchor: [26, 52],
+    iconSize: MAIN_ICONS_SIZE,
+    iconAnchor: MAIN_ICONS_ANCHOR,
   });
   mainPinMarker = L.marker (
     {
@@ -37,6 +42,7 @@ const createMinPinIcon = () => {
     },
   );
   mainPinMarker.addTo(map);
+
   mainPinMarker.on('moveend', (evt) => {
     const addressPoint = evt.target.getLatLng();
     address.value = `${addressPoint.lat.toFixed(5)}, ${addressPoint.lng.toFixed(5)}`;
@@ -48,7 +54,6 @@ const returnMainPinIcon = () => {
     lat: LAT_TOKYO_CENTER,
     lng: LNG_TOKYO_CENTER,
   },
-  address.value = '',
   );
   map.setView({
     lat: LAT_TOKYO_CENTER,
@@ -63,8 +68,8 @@ const createMarkers = (object) => {
   const lng = object.location.lng;
   const pinIcon = L.icon({
     iconUrl: '../img/pin.svg',
-    iconSize: [40, 40],
-    iconAnchor: [20, 40],
+    iconSize: ICONS_SIZE,
+    iconAnchor: ICONS_ANCHOR,
   });
   const pinMarker = L.marker(
     {

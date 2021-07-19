@@ -11,13 +11,11 @@ const showAvatarPreview = () => {
     const file = avtarField.files[0];
     const fileName = file.name.toLowerCase();
     const matches = FILE_TYPES.some((it) => fileName.endsWith(it));
-
     if (matches) {
       const reader = new FileReader();
       reader.addEventListener('load', () => {
         avatarPreview.src = reader.result;
       });
-
       reader.readAsDataURL(file);
     }
   });
@@ -27,14 +25,11 @@ const showPhotoPreview = () => {
   photoUpload.addEventListener('change', () => {
     const file = photoUpload.files[0];
     const fileName = file.name.toLowerCase();
-
     const matches = FILE_TYPES.some((it) => fileName.endsWith(it));
-
     if (matches) {
       const reader = new FileReader();
       photoPreview.style.display = 'flex';
       reader.addEventListener('load', () => {
-        //photoPreview.remove();
         previewImg = document.createElement('img');
         previewImg.style.width = '40px';
         previewImg.style.height = '44px';
@@ -43,7 +38,6 @@ const showPhotoPreview = () => {
         previewImg.src = reader.result;
         photoPreview.appendChild(previewImg);
       });
-
       reader.readAsDataURL(file);
     }
   });
@@ -51,7 +45,7 @@ const showPhotoPreview = () => {
 
 const resetAvatarPhotoPreview = () => {
   avatarPreview.src = 'img/muffin-grey.svg';
-  photoPreview.remove();
+  previewImg.remove();
 };
 
 export {showAvatarPreview, showPhotoPreview, resetAvatarPhotoPreview};

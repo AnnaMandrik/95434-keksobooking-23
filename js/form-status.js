@@ -8,7 +8,6 @@ const formSubmit = document.querySelector('.ad-form');
 const successMessage = document.querySelector('#success').content.querySelector('.success').cloneNode(true);
 const errorMessage = document.querySelector('#error').content.querySelector('.error').cloneNode(true);
 const errorOfRequest = document.querySelector('#error-request').content.querySelector('.error').cloneNode(true);
-const errorOfValid = document.querySelector('#error-valid').content.querySelector('.error').cloneNode(true);
 const resetButton = document.querySelector('.ad-form__reset');
 
 const onSuccessHidden = () => {
@@ -74,13 +73,6 @@ const showErrorOfRequest = () => {
   }, ALERT_SHOW_TIME);
 };
 
-const showErrorValid = () => {
-  document.body.appendChild(errorOfValid);
-  setTimeout(() => {
-    errorOfValid.remove();
-  }, ALERT_SHOW_TIME);
-};
-
 const returnOriginalState = () => {
   formSubmit.reset();
   returnMainPinIcon();
@@ -94,4 +86,4 @@ const onResetButton = () => {
   });
 };
 
-export {showSuccessMessage, showErrorMessage, returnOriginalState, showErrorOfRequest, showErrorValid, onResetButton};
+export {showSuccessMessage, showErrorMessage, returnOriginalState, showErrorOfRequest, onResetButton};

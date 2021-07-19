@@ -1,4 +1,5 @@
 import {createCardElement} from './popup.js';
+import {setRedBorderError} from './form.js';
 
 const LAT_TOKYO_CENTER = (35.680174645).toFixed(5);
 const LNG_TOKYO_CENTER = (139.7539934567).toFixed(5);
@@ -46,6 +47,7 @@ const createMinPinIcon = () => {
   mainPinMarker.on('moveend', (evt) => {
     const addressPoint = evt.target.getLatLng();
     address.value = `${addressPoint.lat.toFixed(5)}, ${addressPoint.lng.toFixed(5)}`;
+    setRedBorderError(address, false);
   });
 };
 

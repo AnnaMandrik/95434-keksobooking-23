@@ -5,7 +5,7 @@ import {createMap, createMinPinIcon, createManyMarkers, removeManyMarkers} from'
 import {enableForm} from './main-page.js';
 import {createFilterNotice, deleteFilters, onMapFilters, onResetButtonFilter, COUNT_DATA_NOTICE} from './filter.js';
 import {debounce} from './utils/debounce.js';
-import {showAvatarPreview, showPhotoPreview, resetAvatarPhotoPreview} from './avatar.js';
+import {showAvatarPreview, showPhotoPreview} from './avatar.js';
 
 const DELAY_BOUNCE = 500;
 const filterNoticeFragment = document.querySelector('.map__filters');
@@ -30,7 +30,6 @@ const getStart = () => {
             returnOriginalState();
             deleteFilters(objects);
             removeManyMarkers();
-            resetAvatarPhotoPreview();
             createManyMarkers(objects.slice(0, COUNT_DATA_NOTICE));
           },
           () => showErrorMessage());
@@ -41,11 +40,10 @@ const getStart = () => {
         filterNoticeFragment.classList.add('hidden');
         checkValidation();
         showAvatarPreview();
+        showPhotoPreview();
         sendData(
           () => {
             showSuccessMessage();
-            resetAvatarPhotoPreview();
-            showPhotoPreview();
             returnOriginalState();
           },
           () => showErrorMessage());

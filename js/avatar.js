@@ -45,7 +45,9 @@ const showPhotoPreview = () => {
 
 const resetAvatarPhotoPreview = () => {
   avatarPreview.src = 'img/muffin-grey.svg';
-  previewImg.remove();
+  if (previewImg) {
+    previewImg.remove();
+  }
 };
 
 export {showAvatarPreview, showPhotoPreview, resetAvatarPhotoPreview};

@@ -1,5 +1,5 @@
 import {createCardElement} from './popup.js';
-import {setRedBorderError} from './form.js';
+import {setRedBorderError} from './util.js';
 
 const LAT_TOKYO_CENTER = (35.680174645).toFixed(5);
 const LNG_TOKYO_CENTER = (139.7539934567).toFixed(5);

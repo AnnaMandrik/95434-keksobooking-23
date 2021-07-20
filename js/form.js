@@ -1,3 +1,5 @@
+import {setRedBorderError} from './util.js';
+
 const MIN_TITLE_LENGTH = 30;
 const MAX_TITLE_LENGTH = 100;
 const NAX_PRICE = 1000000;
@@ -19,14 +21,6 @@ const bedNumber = document.querySelector('#capacity');
 const addressOfResidence = document.querySelector('#address');
 const formNotice = document.querySelector('.ad-form');
 
-const setRedBorderError = (element, value) => {
-  if (value) {
-    element.classList.add('validation-error-red');
-  }
-  else {
-    element.classList.remove('validation-error-red');
-  }
-};
 
 const onTitleNoticeInputInvalid = () => {
   if (titleNoticeInput.validity.valueMissing) {
@@ -124,4 +118,4 @@ const priceNotice = () => {
   priceNoticeInput.placeholder = MIN_RESIDENCE_PRICE.flat;
 };
 
-export {checkValidation, priceNotice, setRedBorderError, checkFormDataValid};
+export {checkValidation, priceNotice, checkFormDataValid};

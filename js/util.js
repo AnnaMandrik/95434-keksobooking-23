@@ -6,5 +6,13 @@ const removeChildrens = ((parent) => {
 
 const isEscEvent = (evt) => evt.key === 'Escape' || evt.key === 'Esc';
 
+const setRedBorderError = (element, value) => {
+  if (value) {
+    element.classList.add('validation-error-red');
+  }
+  else {
+    element.classList.remove('validation-error-red');
+  }
+};
 
-export {removeChildrens, isEscEvent};
+export {removeChildrens, isEscEvent, setRedBorderError};

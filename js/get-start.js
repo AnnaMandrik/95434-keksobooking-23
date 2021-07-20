@@ -5,6 +5,7 @@ import {createMap, createMinPinIcon, createManyMarkers, removeManyMarkers} from'
 import {enableForm} from './main-page.js';
 import {createFilterNotice, deleteFilters, onMapFilters, onResetButtonFilter, COUNT_DATA_NOTICE} from './filter.js';
 import {debounce} from './utils/debounce.js';
+import {showAvatarPreview, showPhotoPreview} from './avatar.js';
 
 const DELAY_BOUNCE = 500;
 const filterNoticeFragment = document.querySelector('.map__filters');
@@ -21,6 +22,8 @@ const getStart = () => {
         DELAY_BOUNCE,
         ));
         checkValidation();
+        showAvatarPreview();
+        showPhotoPreview();
         sendData(
           () => {
             showSuccessMessage();
@@ -36,6 +39,8 @@ const getStart = () => {
         showErrorOfRequest();
         filterNoticeFragment.classList.add('hidden');
         checkValidation();
+        showAvatarPreview();
+        showPhotoPreview();
         sendData(
           () => {
             showSuccessMessage();

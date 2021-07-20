@@ -1,27 +1,28 @@
 import {returnMainPinIcon} from './map.js';
 import {isEscEvent} from './util.js';
 import {priceNotice} from './form.js';
+import {resetAvatarPhotoPreview} from './avatar.js';
 
-const ALERT_SHOW_TIME = 5000;
+const ALERT_SHOW_TIME = 3000;
 const formSubmit = document.querySelector('.ad-form');
 const successMessage = document.querySelector('#success').content.querySelector('.success').cloneNode(true);
 const errorMessage = document.querySelector('#error').content.querySelector('.error').cloneNode(true);
 const errorOfRequest = document.querySelector('#error-request').content.querySelector('.error').cloneNode(true);
 const resetButton = document.querySelector('.ad-form__reset');
 
-const successHidden = () => {
+const onSuccessHidden = () => {
   successMessage.classList.add('hidden');
 };
 
 const onSuccessEscapeKeydown = (evt) => {
   if (isEscEvent(evt)) {
     evt.preventDefault();
-    successHidden();
+    onSuccessHidden();
   }
 };
 
 const onSuccessClick = () => {
-  successHidden();
+  onSuccessHidden();
 };
 
 const closeSuccess = () => {
@@ -35,19 +36,19 @@ const showSuccessMessage = () => {
   document.addEventListener('click', onSuccessClick, closeSuccess);
 };
 
-const errorHidden = () => {
+const onErrorHidden = () => {
   errorMessage.classList.add('hidden');
 };
 
 const onErrorEscapeKeydown = (evt) => {
   if (isEscEvent(evt)) {
     evt.preventDefault();
-    errorHidden();
+    onErrorHidden();
   }
 };
 
 const onErrorClick = () => {
-  errorHidden();
+  onErrorHidden();
 };
 
 const closeError = () => {
@@ -61,7 +62,7 @@ const showErrorMessage = () => {
   document.addEventListener('click', onErrorClick, closeError);
   const errorButton = document.querySelector('.error__button');
   errorButton.addEventListener('click', () => {
-    errorHidden();
+    onErrorHidden();
   });
 };
 
@@ -76,6 +77,7 @@ const returnOriginalState = () => {
   formSubmit.reset();
   returnMainPinIcon();
   priceNotice();
+  resetAvatarPhotoPreview();
 };
 
 const onResetButton = () => {

@@ -92,24 +92,24 @@ const createFilterNotice = (objects) => {
   createManyMarkers(filterObjects);
 };
 
-const onMapFilters = (cb) => {
+const changeMapFilters = (cb) => {
   mapFilters.addEventListener('change', () => {
     removeManyMarkers();
     cb();},
   );
 };
 
-const deleteFilters = () => {
+const removeFilters = () => {
   mapFilters.reset();
 };
 
-const onResetButtonFilter = (objects) => {
+const clickResetButtonFilter = (objects) => {
   resetButton.addEventListener('click', () => {
-    deleteFilters(objects);
+    removeFilters(objects);
     removeManyMarkers();
     createManyMarkers(objects.slice(0, COUNT_DATA_NOTICE));
     returnOriginalState();
   });
 };
 
-export {createFilterNotice, deleteFilters, onMapFilters, onResetButtonFilter, COUNT_DATA_NOTICE};
+export {createFilterNotice, removeFilters, changeMapFilters, clickResetButtonFilter, COUNT_DATA_NOTICE};

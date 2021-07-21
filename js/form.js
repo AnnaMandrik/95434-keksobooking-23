@@ -3,6 +3,7 @@ import {setRedBorderError} from './util.js';
 const MIN_TITLE_LENGTH = 30;
 const MAX_TITLE_LENGTH = 100;
 const NAX_PRICE = 1000000;
+const TIME_SET = 3000;
 const MIN_RESIDENCE_PRICE = {
   bungalow: 0,
   flat: 1000,
@@ -18,11 +19,10 @@ const timeIn = document.querySelector('#timein');
 const timeOut = document.querySelector('#timeout');
 const roomNumber = document.querySelector('#room_number');
 const bedNumber = document.querySelector('#capacity');
-const addressOfResidence = document.querySelector('#address');
 const formNotice = document.querySelector('.ad-form');
 
 
-const onTitleNoticeInputInvalid = () => {
+const checkTitleNoticeInput = () => {
   if (titleNoticeInput.validity.valueMissing) {
     titleNoticeInput.setCustomValidity('Обязательное текстовое  поле');
   } else {
@@ -30,7 +30,7 @@ const onTitleNoticeInputInvalid = () => {
   }
 };
 
-const onPriceNoticeInputInvalid = () => {
+const checkPriceNoticeInput = () => {
   if (priceNoticeInput.validity.valueMissing) {
     priceNoticeInput.setCustomValidity('Обязательное числовое  поле');
   } else {
@@ -38,13 +38,7 @@ const onPriceNoticeInputInvalid = () => {
   }
 };
 
-const onAddressInputInvalid = () => {
-  const valueLengthAddress = addressOfResidence.value.length;
-  setRedBorderError(addressOfResidence, !valueLengthAddress);
-  return !!valueLengthAddress;
-};
-
-const onTitleNoticeInput = () => {
+const checkTitleNotice = () => {
   const valueLength = titleNoticeInput.value.length;
   if (valueLength < MIN_TITLE_LENGTH) {
     titleNoticeInput.setCustomValidity(`Ещё ${MIN_TITLE_LENGTH - valueLength} симв.`);
@@ -56,13 +50,13 @@ const onTitleNoticeInput = () => {
   titleNoticeInput.reportValidity();
 };
 
-const onTypeOfResidenceChange = () => {
+const changeTypeOfResidence = () => {
   const minPrice = MIN_RESIDENCE_PRICE[typeOfResidence.value];
   priceNoticeInput.placeholder = minPrice;
   priceNoticeInput.min = minPrice;
 };
 
-const onPriceNoticeInput = () => {
+const checkPriceNotice = () => {
   if (priceNoticeInput.value > NAX_PRICE) {
     priceNoticeInput.setCustomValidity(`Максимальная цена - ${NAX_PRICE} руб.`);
   } else {
@@ -70,13 +64,13 @@ const onPriceNoticeInput = () => {
   }
 };
 
-const onTimeInOutChange = (evt) => {
+const changeTimeInOut = (evt) => {
   const newValue = evt.target.value;
   timeIn.value = newValue;
   timeOut.value = newValue;
 };
 
-const onRoomBedNumberChange = () => {
+const changeRoomBedNumber = () => {
   let textMessage = '';
   const bedValue = bedNumber.value;
   const roomValue = roomNumber.value;
@@ -93,29 +87,24 @@ const onRoomBedNumberChange = () => {
 formNotice.addEventListener('invalid', (evt) => {
   setRedBorderError(evt.target, true);
   setTimeout(() => {setRedBorderError(evt.target, false);
-  }, 3000);
+  }, TIME_SET);
 }, true);
 
-
 const checkValidation = () => {
-  titleNoticeInput.addEventListener('invalid', onTitleNoticeInputInvalid);
-  priceNoticeInput.addEventListener('invalid', onPriceNoticeInputInvalid);
-  titleNoticeInput.addEventListener('input', onTitleNoticeInput);
-  typeOfResidence.addEventListener('change', onTypeOfResidenceChange);
-  priceNoticeInput.addEventListener('input', onPriceNoticeInput);
-  timeIn.addEventListener('change', onTimeInOutChange);
-  timeOut.addEventListener('change', onTimeInOutChange);
-  roomNumber.addEventListener ('change', onRoomBedNumberChange);
-  bedNumber.addEventListener ('change', onRoomBedNumberChange);
+  titleNoticeInput.addEventListener('invalid', checkTitleNoticeInput);
+  priceNoticeInput.addEventListener('invalid', checkPriceNoticeInput);
+  titleNoticeInput.addEventListener('input', checkTitleNotice);
+  typeOfResidence.addEventListener('change', changeTypeOfResidence);
+  priceNoticeInput.addEventListener('input', checkPriceNotice);
+  timeIn.addEventListener('change', changeTimeInOut);
+  timeOut.addEventListener('change', changeTimeInOut);
+  roomNumber.addEventListener ('change', changeRoomBedNumber);
+  bedNumber.addEventListener ('change', changeRoomBedNumber);
 };
-
-
-const checkFormDataValid = () =>  onAddressInputInvalid() && onRoomBedNumberChange();
-
 
 const priceNotice = () => {
   priceNoticeInput.min = MIN_RESIDENCE_PRICE.flat;
   priceNoticeInput.placeholder = MIN_RESIDENCE_PRICE.flat;
 };
 
-export {checkValidation, priceNotice, checkFormDataValid};
+export {checkValidation, priceNotice};

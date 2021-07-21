@@ -10,59 +10,59 @@ const errorMessage = document.querySelector('#error').content.querySelector('.er
 const errorOfRequest = document.querySelector('#error-request').content.querySelector('.error').cloneNode(true);
 const resetButton = document.querySelector('.ad-form__reset');
 
-const onSuccessHidden = () => {
+const hideSuccess = () => {
   successMessage.classList.add('hidden');
 };
 
-const onSuccessEscapeKeydown = (evt) => {
+const keydownSuccessEscape = (evt) => {
   if (isEscEvent(evt)) {
     evt.preventDefault();
-    onSuccessHidden();
+    hideSuccess();
   }
 };
 
-const onSuccessClick = () => {
-  onSuccessHidden();
+const clickSuccess = () => {
+  hideSuccess();
 };
 
 const closeSuccess = () => {
-  document.removeEventListener('keydown', onSuccessEscapeKeydown);
-  document.removeEventListener('click', onSuccessClick);
+  document.removeEventListener('keydown', keydownSuccessEscape);
+  document.removeEventListener('click', clickSuccess);
 };
 
 const showSuccessMessage = () => {
   document.body.appendChild(successMessage);
-  document.addEventListener('keydown', onSuccessEscapeKeydown, closeSuccess);
-  document.addEventListener('click', onSuccessClick, closeSuccess);
+  document.addEventListener('keydown', keydownSuccessEscape, closeSuccess);
+  document.addEventListener('click', clickSuccess, closeSuccess);
 };
 
-const onErrorHidden = () => {
+const hideError = () => {
   errorMessage.classList.add('hidden');
 };
 
-const onErrorEscapeKeydown = (evt) => {
+const keydownErrorEscape = (evt) => {
   if (isEscEvent(evt)) {
     evt.preventDefault();
-    onErrorHidden();
+    hideError();
   }
 };
 
-const onErrorClick = () => {
-  onErrorHidden();
+const clickError = () => {
+  hideError();
 };
 
 const closeError = () => {
-  document.removeEventListener('keydown', onErrorEscapeKeydown);
-  document.removeEventListener('click', onErrorClick);
+  document.removeEventListener('keydown', keydownErrorEscape);
+  document.removeEventListener('click', clickError);
 };
 
 const showErrorMessage = () => {
   document.body.appendChild(errorMessage);
-  document.addEventListener('keydown', onErrorEscapeKeydown, closeError);
-  document.addEventListener('click', onErrorClick, closeError);
+  document.addEventListener('keydown', keydownErrorEscape, closeError);
+  document.addEventListener('click', clickError, closeError);
   const errorButton = document.querySelector('.error__button');
   errorButton.addEventListener('click', () => {
-    onErrorHidden();
+    hideError();
   });
 };
 
@@ -80,10 +80,10 @@ const returnOriginalState = () => {
   resetAvatarPhotoPreview();
 };
 
-const onResetButton = () => {
+const clickResetButton = () => {
   resetButton.addEventListener('click', () => {
     returnOriginalState();
   });
 };
 
-export {showSuccessMessage, showErrorMessage, returnOriginalState, showErrorOfRequest, onResetButton};
+export {showSuccessMessage, showErrorMessage, returnOriginalState, showErrorOfRequest, clickResetButton};

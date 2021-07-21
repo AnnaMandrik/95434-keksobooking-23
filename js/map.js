@@ -1,12 +1,11 @@
 import {createCardElement} from './popup.js';
-import {setRedBorderError} from './util.js';
 
 const LAT_TOKYO_CENTER = (35.680174645).toFixed(5);
 const LNG_TOKYO_CENTER = (139.7539934567).toFixed(5);
-const MAIN_ICONS_SIZE = [52, 52];
-const MAIN_ICONS_ANCHOR = [26, 52];
-const ICONS_SIZE = [40, 40];
-const ICONS_ANCHOR = [20, 40];
+const MAINS_ICONS_SIZES = [52, 52];
+const MAINS_ICONS_ANCHORS = [26, 52];
+const ICONS_SIZES = [40, 40];
+const ICONS_ANCHORS = [20, 40];
 
 const address = document.querySelector('#address');
 let map;
@@ -29,8 +28,8 @@ let mainPinMarker;
 const createMinPinIcon = () => {
   const mainPinIcon = L.icon({
     iconUrl: '../img/main-pin.svg',
-    iconSize: MAIN_ICONS_SIZE,
-    iconAnchor: MAIN_ICONS_ANCHOR,
+    iconSize: MAINS_ICONS_SIZES,
+    iconAnchor: MAINS_ICONS_ANCHORS,
   });
   mainPinMarker = L.marker (
     {
@@ -47,7 +46,6 @@ const createMinPinIcon = () => {
   mainPinMarker.on('moveend', (evt) => {
     const addressPoint = evt.target.getLatLng();
     address.value = `${addressPoint.lat.toFixed(5)}, ${addressPoint.lng.toFixed(5)}`;
-    setRedBorderError(address, false);
   });
 };
 
@@ -70,8 +68,8 @@ const createMarkers = (object) => {
   const lng = object.location.lng;
   const pinIcon = L.icon({
     iconUrl: '../img/pin.svg',
-    iconSize: ICONS_SIZE,
-    iconAnchor: ICONS_ANCHOR,
+    iconSize: ICONS_SIZES,
+    iconAnchor: ICONS_ANCHORS,
   });
   const pinMarker = L.marker(
     {

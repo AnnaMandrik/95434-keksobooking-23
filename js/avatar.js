@@ -1,4 +1,4 @@
-const FILE_TYPES = ['gif', 'jpg', 'jpeg', 'png'];
+const FILES_TYPES = ['gif', 'jpg', 'jpeg', 'png'];
 
 const avtarField = document.querySelector('.ad-form__field input[type=file]');
 const avatarPreview = document.querySelector('.ad-form-header__preview img');
@@ -10,7 +10,7 @@ const showAvatarPreview = () => {
   avtarField.addEventListener('change', () => {
     const file = avtarField.files[0];
     const fileName = file.name.toLowerCase();
-    const matches = FILE_TYPES.some((it) => fileName.endsWith(it));
+    const matches = FILES_TYPES.some((it) => fileName.endsWith(it));
     if (matches) {
       const reader = new FileReader();
       reader.addEventListener('load', () => {
@@ -25,7 +25,7 @@ const showPhotoPreview = () => {
   photoUpload.addEventListener('change', () => {
     const file = photoUpload.files[0];
     const fileName = file.name.toLowerCase();
-    const matches = FILE_TYPES.some((it) => fileName.endsWith(it));
+    const matches = FILES_TYPES.some((it) => fileName.endsWith(it));
     if (matches) {
       const reader = new FileReader();
       photoPreview.style.display = 'flex';

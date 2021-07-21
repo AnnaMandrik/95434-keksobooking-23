@@ -1,5 +1,3 @@
-import {checkFormDataValid} from './form.js';
-
 const URL =  {
   SERVER: 'https://23.javascript.pages.academy/keksobooking',
   DATA: 'https://23.javascript.pages.academy/keksobooking/data',
@@ -25,23 +23,21 @@ const getData = (onSuccess, onError) => {
 const sendData = (onSuccess, onError) => {
   formSubmit.addEventListener('submit', (evt) => {
     evt.preventDefault();
-    if (checkFormDataValid()) {
-      fetch(URL.SERVER,
-        {
-          method: 'POST',
-          body: new FormData(evt.target),
-        },
-      ) .then((response) => {
-        if(response.ok) {
-          onSuccess();
-        } else {
-          onError();
-        }
-      })
-        .catch(() => {
-          onError();
-        });
-    }
+    fetch(URL.SERVER,
+      {
+        method: 'POST',
+        body: new FormData(evt.target),
+      },
+    ) .then((response) => {
+      if(response.ok) {
+        onSuccess();
+      } else {
+        onError();
+      }
+    })
+      .catch(() => {
+        onError();
+      });
   });
 };
 
